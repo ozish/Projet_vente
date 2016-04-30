@@ -24,72 +24,75 @@
 
 	$(document).ready(function() {
 		
-		$("#myBtn1").click(function(){
-	        $("#myModal1").modal();
-	    });
-		
-		$("#btnNewMember").click(function() {
-	        $("#myModal1").modal();
-			$("#myModal2").modal();
-		});
-		
-		$("#Connect").click(function() {
-			$.post("Servlet_retrieve", {"Identifiantt":$("#usrname").val(),"Mdpp":$("#psw").val()}, function(data, status) {
-				//alert("Data: " + data + "\nStatus: " + status);
-				var resultArray = data.split("/");
-				var resultat = resultArray[2];
-
-				if (resultat == "Found") {
-
-					// $("#myModal").modal();
-					// $.load("index.html");
-					//window.location.href = 'index.html';
-					alert(" Utilisateur Connu :) ");
-
-				} else {
-
-					// $("#myModalNotFound").modal();
-
-					alert(" Utilisateur Inconnu ");
-				}
+	$(document).ready(function() {
+			
+			$("#myBtn1").click(function(){
+		        $("#myModal1").modal();
+		    });
+			
+			$("#btnNewMember").click(function() {
+		        //$("#myModal1").modal();
+				$("#myModal2").modal();
 			});
-		});
-
-		$("#Register").click(function() {
-
-			if ($("#psw1").val() != $("#psw2").val()) {
-				alert("Confirmation de mot de passe incorrect");
-			} else {
-				$.post("Servlet_retrieve2", {"Emaill":$("#usremail").val(),"Identifiantt":$("#username").val()}, function(data, status) {
-					alert("Data: " + data + "\nStatus: " + status);
+			
+			$("#Connect").click(function() {
+				$.post("Servlet_retrieve", {"Identifiantt":$("#usrname").val(),"Mdpp":$("#psw").val()}, function(data, status) {
+					//alert("Data: " + data + "\nStatus: " + status);
 					var resultArray = data.split("/");
 					var resultat = resultArray[2];
-	
+
 					if (resultat == "Found") {
+
 						// $("#myModal").modal();
 						// $.load("index.html");
 						//window.location.href = 'index.html';
-						alert(" Utilisateur deja Connu :) ");
+						alert(" Utilisateur Connu :) ");
+
 					} else {
-						$.post("Servlet_create", {"Emaill" : $("#usremail").val(),"Identifiantt" : $("#username").val(),"Mdpp1" : $("#psw1").val()}), function(data, status) {
-							//alert("Data: " + data + "\nStatus: " + status);
-							var resultArray = data.split("/");
-							var resultat = resultArray[4]; //stock en retour le usrmail,usrname, psw1,psw2, Found donc 5 objets
-							if (resultat == "Found") {
-								// $("#myModal").modal();
-								// $.load("index.html");
-								//window.location.href = 'index.html';
-								alert(" Enregistré :) ");
-							} else {
-								// $("#myModalNotFound").modal();
-								alert(" Problème réessayer ");
-							}
-						}
+
+						// $("#myModalNotFound").modal();
+
+						alert(" Utilisateur Inconnu ");
 					}
 				});
-			}
+			});
+
+			$("#Register").click(function() {
+
+				if ($("#psw1").val() != $("#psw2").val()) {
+					alert("Confirmation de mot de passe incorrect");
+				} else {
+					$.ajax("Servlet_retrieve2", {"Emaill":$("#usremail").val(),"Identifiantt":$("#username").val()}, function(data, status) {
+						alert("Data: " + data + "\nStatus: " + status);
+						var resultArray = data.split("/");
+						var resultat = resultArray[2];
+		
+						if (resultat == "Found") {
+							// $("#myModal").modal();
+							// $.load("index.html");
+							//window.location.href = 'index.html';
+							alert(" Utilisateur deja Connu :) ");
+						} else {
+							$.post("Servlet_create", {"Emaill" : $("#usremail").val(),"Identifiantt" : $("#username").val(),"Mdpp1" : $("#psw1").val()}), function(data, status) {
+								//alert("Data: " + data + "\nStatus: " + status);
+								var resultArray = data.split("/");
+								var resultat = resultArray[4]; //stock en retour le usrmail,usrname, psw1,psw2, Found donc 5 objets
+								if (resultat == "Found") {
+									// $("#myModal").modal();
+									// $.load("index.html");
+									//window.location.href = 'index.html';
+									alert(" Enregistré :) ");
+								} else {
+									// $("#myModalNotFound").modal();
+									alert(" Problème réessayer ");
+								}
+							}
+						}
+					});
+				}
+			});
 		});
-	
+		
 	
 	$("#AjouterObj").click(function() {
 		$.get("Servlet_create_objet", {"Designationn":$("#usritem").val(),"Pricee":$("#usrprice").val(),
