@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mon site de vente</title>
+  <center>
+	<img src="Images/Money.jpg" width="300" height="150" />
+  </center>
+  
+  <style type="text/css">
+  div.photo { height: 100px; line-height: 100px;text-align:center; }
+</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="Bootstrap_jQuery/bootstrap.min.css">
+  <script src="Bootstrap_jQuery/jquery.min.js"></script>
+  <script src="Bootstrap_jQuery/bootstrap.min.js"></script>
+
+	<script src="home.js"> </script>
+<script>
+
+///////////JQUERYYYYYY de JAVASCRIPT qui permet d'utiliser le $. au lieu document.GetlementById.click//////////////
+
+//Pour l'ajout dés click nouveau membre?
+
+	$(document).ready(function() {
+		
+		$("#myBtn1").click(function(){
+	        $("#myModal1").modal();
+	    });
+		
+		$("#btnNewMember").click(function() {
+	        $("#myModal1").modal();
+			$("#myModal2").modal();
+		});
+		
+		$("#Connect").click(function() {
+			$.post("Servlet_retrieve", {"Identifiantt":$("#usrname").val(),"Mdpp":$("#psw").val()}, function(data, status) {
+				//alert("Data: " + data + "\nStatus: " + status);
+				var resultArray = data.split("/");
+				var resultat = resultArray[2];
+
+				if (resultat == "Found") {
+
+					// $("#myModal").modal();
+					// $.load("index.html");
+					//window.location.href = 'index.html';
+					alert(" Utilisateur Connu :) ");
+
+				} else {
+
+					// $("#myModalNotFound").modal();
+
+					alert(" Utilisateur Inconnu ");
+				}
+			});
+		});
+
+		$("#Register").click(function() {
+
+			if ($("#psw1").val() != $("#psw2").val()) {
+				alert("Confirmation de mot de passe incorrect");
+			} else {
+				$.post("Servlet_retrieve2", {"Emaill":$("#usremail").val(),"Identifiantt":$("#username").val()}, function(data, status) {
+					alert("Data: " + data + "\nStatus: " + status);
+					var resultArray = data.split("/");
+					var resultat = resultArray[2];
+	
+					if (resultat == "Found") {
+						// $("#myModal").modal();
+						// $.load("index.html");
+						//window.location.href = 'index.html';
+						alert(" Utilisateur deja Connu :) ");
+					} else {
+						$.post("Servlet_create", {"Emaill" : $("#usremail").val(),"Identifiantt" : $("#username").val(),"Mdpp1" : $("#psw1").val()}), function(data, status) {
+							//alert("Data: " + data + "\nStatus: " + status);
+							var resultArray = data.split("/");
+							var resultat = resultArray[4]; //stock en retour le usrmail,usrname, psw1,psw2, Found donc 5 objets
+							if (resultat == "Found") {
+								// $("#myModal").modal();
+								// $.load("index.html");
+								//window.location.href = 'index.html';
+								alert(" Enregistré :) ");
+							} else {
+								// $("#myModalNotFound").modal();
+								alert(" Problème réessayer ");
+							}
+						}
+					}
+				});
+			}
+		});
+	
+	
+	$("#AjouterObj").click(function() {
+		$.get("Servlet_create_objet", {"Designationn":$("#usritem").val(),"Pricee":$("#usrprice").val(),
+			"Categoriess":$("#ListeCategories").val(),"Lieuu":$("#ListeLieu").val()}, 
+			function(data, status) {
+		
+			alert("Data: " + data + "\nStatus: " + status);
+			
+			var objets = JSON.parse(data);//Tranforme une chaine de caracteres au format JSON en un objet javascript (2éme étape)
+			
+			$("#listeAffichage").prepend("<tr><td>"+objets.Designation+"</td><td>"+objets.Prix+"</td><td>"+objets.Categorie+"</td><td>"+objets.Lieu+"</td></tr>");
+			
+			/*
+			*PARCOURS LISTE OBJETS POUR AFFICHAGE EN FIN DE TABLEAU
+			$.each(objets, function(key, value){objets
+				$("#listeAffichage").append("<tr><td>"+value.Designation+"</td><td>"+value.Prix+"</td><td>"+value.Categorie+"</td></tr>");//value.attribut attribut = nom attribut objet java categorie  sans "s" de l'objet Objet
+			})
+			/*
+			var resultArray = data.split("/");
+			var resultat = resultArray[6];
+
+			if (resultat == "Found") {
+				alert(" Ajouté :) ");
+			} else {
+				// $("#myModalNotFound").modal();
+				alert(" Probleme Ajout ");
+			}
+			*/
+			
+			
+			});	
+	});
+	
+
+
+	
+	});
+
+		
+	
+
+</script>
+ </head>
+ 
+ <!-- RemplirListe est dans le fichier JS et inclus remplirTable pour la liste des objets affichés -->
+<body  onload = "RemplirListe()">
+<br><br><br>
+
+
+<!--Menu-->
+<!-- <div class="container">
+  <div class="w3-topnav w3-card-2 w3-slim topnav" id="topnav" style="position: fixed; top: 0px;">
+	<div style="overflow:auto;"> -->
+  <!--<ul class="nav nav-pills" role="tablist">-->
+   <!-- <li class="dropdown"></li>-->
+<!-- <nav class="navbar navbar-nav navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="home.html">|||</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <a style="float-left" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">Menu <span class="caret"></span>
+	  </a>
+      <ul class="dropdown-menu" role="menu">
+       <li class="active"><a href="home.html">Accueil</a></li>
+        <li><a href="DeposeAnnonce.html">Déposer une annonce</a></li>
+        <li><a href="Match.html">Match</a></li>	
+		<li><a href="Infos.html">Infos pratiques</a></li>
+		<ul class="nav navbar-nav navbar-right">
+			
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a style="float-right right:0px" class=" btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-log-in"></span>Se connecter</a></li>
+      </ul>
+      </ul>
+    </li>
+	<li><a href="#">Offres</a>
+	</li>
+  </ul> -->
+  
+  <nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand"> <span class="label label-primary">MSV</span>
+				</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a href="home.html">Home</a></li>
+				<li><a href="DeposeAnnonce.html">DeposeAnnonce</a></li>
+				<li><a href="Match.html">Match</a></li>
+				<li><a href="Infos.html">Infos pratiques</a></li>
+				<!-- <li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#">Services pour la nouvelle
+						construction <span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="EnveloppeThermique.html">Enveloppe thermique</a></li>
+						<li><a href="EquipementEnergetique.html">Equipement
+								énergetique</a></li>
+					</ul></li> -->
+
+				<li><a href="#">Contact</a></li>
+
+			</ul>
+			<ul class="nav navbar-brand navbar-right">
+				<li>
+					<div class="container-fluid">
+						<button type="button" class="btn btn-primary" id="myBtn1">Espace Client</button>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</nav>
+  <!-- Modal de se connecter -->
+		  <div class="modal fade" id="myModal1" role="dialog">
+		    <div class="modal-dialog" style="height: 1000px; width: 600px;">
+		    
+		      <!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">×</button>
+					<h4 class="modal-title">Espace Client</h4>
+				</div>
+
+				<div class="modal-body">
+					<div class="modal-body" style="padding: 40px 50px;">
+
+						<form role="form">
+							<div class="form-group">
+								<label for="usrname"><span></span> Username</label> <input
+									type="text" class="form-control" id="usrname"
+									placeholder="Entrer Login">
+							</div>
+							<div class="form-group">
+								<label for="psw"><span></span> Password</label> <input
+									type="text" class="form-control" id="psw"
+									placeholder="Enter mot de passe">
+							</div>
+							<div class="checkbox">
+								<label><input type="checkbox" value="" checked>Remember
+									me</label>
+							</div>
+							<button type="submit" class="btn btn-warning btn-block"
+								id="Connect">
+								<span></span> Login
+							</button>
+						</form>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<div>
+						<a href="#"><button type="button" class="btn btn-warning" id="btnNewMember" role="dialog">Nouveau membre ?</button></a>
+						<a href="#"><button type="button" class="btn btn-warning" id="btnForgetPwd" role="dialog">Mot de passe oublié?</button></a>
+						<br>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+
+
+			<!-- Modal de nouvel utilisateur contenu dans modal de connexion -->
+			<div class="modal fade" id="myModal2" role="dialog">
+				<div class="modal-dialog" style="height: 1000px; width: 600px;">
+
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">×</button>
+							<h4 class="modal-title">Nouvel Espace Client</h4>
+						</div>
+						<div class="modal-body">
+							<div class="modal-body" style="padding: 40px 50px;">
+
+								<form role="form">
+									<div class="form-group">
+										<label for="usremail1"><span></span>Entrer E-mail</label> <input
+											type="email" class="form-control" id="usremail"
+											placeholder=" Email">
+									</div>
+									<div class="form-group">
+										<label for="usrname1"><span></span> Entrer un Login</label> <input
+											type="text" class="form-control" id="username"
+											placeholder="Username">
+									</div>
+									<div class="form-group">
+										<label for="psw"><span></span>Enter mot de passe </label> <input
+											type="text" class="form-control" id="psw1"
+											placeholder="Password">
+									</div>
+									<div class="form-group">
+										<label for="psw"><span>Confirmer mot de passe</span>
+										</label> <input type="text" class="form-control" id="psw2"
+											placeholder="Confirm Password ">
+									</div>
+
+									<div class="checkbox">
+										<label><input type="checkbox" value="" checked>Remember
+											me</label>
+									</div>
+									<button type="submit" class="btn btn-warning btn-block"
+										id="Register">
+										<span></span> S'inscrire
+									</button>
+								</form>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<a href="#"><button type="button" class="btn btn-warning"
+									id="btnForgetPwd" role="dialog">Se connecter</button></a> <a
+								href="#"><button type="button" class="btn btn-warning"
+									id="btnForgetPwd" role="dialog">Mot de passe oublié?</button></a> <br />
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Close</button>
+						</div>
+					</div>
+					<!-- Modal de mot de passe oublié dans modal de connexion_HOME -->
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+		<div class="container-fluid">
+		<form role="form" action="MaSuperServlet" method="get">
+			<div class="row">
+				<div class="col-sm-2">
+					Désignation : <br> <input type="text" name="Recherche" id="usritem"
+						style="width: 100%" />
+				</div>
+				<div class="col-sm-2">
+					Prix : <br> <input type="text" name="Recherche" id="usrprice"
+						style="width: 100%" />
+				</div>
+				<div class="col-sm-3">
+					Categories : <br> <select id="ListeCategories"
+						class="col-sm-3" style="width: 100%">
+					<!-- 	<option value="France">FRANCE</option>
+						<option value="Italie">ITALIE</option>
+						<option value="Allemagne">ALLEMAGNE</option>
+						<option value="Espagne">ESPAGNE</option>
+						<option value="Angleterre">ANGLETERRE</option> -->
+					</select>
+				</div>
+
+				<div class="col-sm-3">
+
+					Lieu : <br> <select id="ListeLieu" class="col-sm-3"
+						style="width: 100%">
+						<!-- 	<option value="France">FRANCE</option>
+						<option value="Italie">ITALIE</option>
+						<option value="Allemagne">ALLEMAGNE</option>
+						<option value="Espagne">ESPAGNE</option>
+						<option value="Angleterre">ANGLETERRE</option> -->
+					</select>
+				</div>
+				<div class="col-sm-2">
+					 <input type="Button" value="Ajouter" id="AjouterObj" name="AjouterObj" class="btn btn-primary" style="width:100%" />
+			    </div>
+				
+				
+			</div>
+		</form>
+	</div>
+	<br><br>
+
+	<!-- /////////////////////AFFICHAGE ANNONCE/////////////////////////////// -->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12">
+				<table border="1" class="col-sm-10" >
+					<tr>
+						<th class="col-sm-2">Designation</th>
+						<th class="col-sm-2">Prix</th>
+						<th class="col-sm-2">Categorie</th>
+						<th class="col-sm-2">Lieu</th>
+					</tr>
+				</table>
+				<table border="1" id="listeAffichage" class="col-sm-10">
+				<tr >
+						<th class="col-sm-2"> </th>
+						<th class="col-sm-2"> </th>
+						<th class="col-sm-2"> </th>
+						<th class="col-sm-2"> </th>
+				</tr>
+
+				</table>
+			</div>
+		</div>
+	</div>
+
+<p><strong>Note:</strong> The async attribute of the script tag is not supported in Internet Explorer 9 and earlier versions.</p>
+
+</body>
+</html>

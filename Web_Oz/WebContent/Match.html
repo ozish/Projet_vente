@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mon site de vente</title>
+  <img src="Images/poignee_de_main.gif" style='display:center';  width="150" height="50" />
+  <style type="text/css">
+  div.photo { height: 100px; line-height: 100px;text-align:center; }
+</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="Bootstrap_jQuery/bootstrap.min.css">
+  <script src="Bootstrap_jQuery/jquery.min.js"></script>
+  <script src="Bootstrap_jQuery/bootstrap.min.js"></script>
+
+	<script src="home.js"> </script>
+<script>
+$(document).ready(function(){
+    $("#myBtn1").click(function(){
+        $("#myModal1").modal();
+    });
+});
+</script>
+ </head>
+<body  onload = "RemplirListe()">
+<br><br><br>
+
+
+<!--Menu-->
+<!-- <div class="container">
+  <div class="w3-topnav w3-card-2 w3-slim topnav" id="topnav" style="position: fixed; top: 0px;">
+	<div style="overflow:auto;"> -->
+  <!--<ul class="nav nav-pills" role="tablist">-->
+   <!-- <li class="dropdown"></li>-->
+<!-- <nav class="navbar navbar-nav navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="home.html">|||</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <a style="float-left" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">Menu <span class="caret"></span>
+	  </a>
+      <ul class="dropdown-menu" role="menu">
+       <li class="active"><a href="home.html">Accueil</a></li>
+        <li><a href="DeposeAnnonce.html">Déposer une annonce</a></li>
+        <li><a href="Match.html">Match</a></li>	
+		<li><a href="Infos.html">Infos pratiques</a></li>
+		<ul class="nav navbar-nav navbar-right">
+			
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a style="float-right right:0px" class=" btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-log-in"></span>Se connecter</a></li>
+      </ul>
+      </ul>
+    </li>
+	<li><a href="#">Offres</a>
+	</li>
+  </ul> -->
+  
+  <nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand"> <span class="label label-info">MSV</span>
+				</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a href="home.html">Home</a></li>
+				<li><a href="DeposeAnnonce.html">DeposeAnnonce</a></li>
+				<li><a href="Match.html">Match</a></li>	
+				<li><a href="Infos.html">Infos pratiques</a></li>
+				<!-- <li class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#">Services pour la nouvelle
+						construction <span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="EnveloppeThermique.html">Enveloppe thermique</a></li>
+						<li><a href="EquipementEnergetique.html">Equipement
+								énergetique</a></li>
+					</ul></li> -->
+
+				<li><a href="#">Contact</a></li>
+
+			</ul>
+		  <ul class="nav navbar-nav navbar-right">
+						<!-- <li class="active"><a href="EspaceClient.html"><span
+								class="glyphicon glyphicon-user"></span> Espace Client</a></li> -->
+						<!-- <li><a href="EspacePartenaire.html"><span
+								class="glyphicon glyphicon-user"></span> Espace Partenaire</a></li> -->
+						<!-- Trigger the modal with a button -->
+		  				<button type="button" class="btn btn-info btn-lg" id="myBtn1">Espace Client</button>
+					<!-- Modal -->
+		  <div class="modal fade" id="myModal1" role="dialog">
+		    <div class="modal-dialog">
+		    
+		      <!-- Modal content-->
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		          <h4 class="modal-title">Modal Header</h4>
+		        </div>
+		        <div class="modal-body">
+		          <div class="modal-body" style="padding:40px 50px;">
+          
+          <form role="form">
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
+              <input type="text" class="form-control" id="usrname" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+              <input type="text" class="form-control" id="psw" placeholder="Enter password">
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" value="" checked>Remember me</label>
+            </div>
+              <button type="submit" class="btn btn-info btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+          </form>
+        </div>
+		        </div>
+		        <div class="modal-footer">
+		          	<p>Nouveau membre ? <a href="#">Cliquez ici</a></p>
+         			<p>Mot de passe oublié? <a href="#">Cliquez ici</a></p>
+		          	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        	
+		        </div>
+		      </div>
+		      
+		    </div>
+		  </div>
+		  
+		</div>
+					</ul>
+		</div>
+		</nav>
+  
+  
+  <div class="col-sm-4">
+	 <input type="Button" value="Cherche" class="btn btn-primary" style="width:100%" onclick=""/>
+    </div>
+
+  </div>
+<Match>
+
+<p><strong>Note:</strong> The async attribute of the script tag is not supported in Internet Explorer 9 and earlier versions.</p>
+
+</body>
+</html>
